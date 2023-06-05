@@ -7,7 +7,7 @@ Welcome to Project 2! It's time to start modeling.
 1. Creating and iteratively refining a regression model
 1. Using [Kaggle](https://www.kaggle.com/) to practice the modeling process
 1. Providing business insights through reporting and presentation.
-2. [Dataset] (https://jse.amstat.org/v19n3/decock/DataDocumentation.txt)
+2. [Dataset](https://jse.amstat.org/v19n3/decock/DataDocumentation.txt)
 
 You are tasked with creating a regression model based on the Ames Housing Dataset. This model will predict the price of a house at sale.
 
