@@ -1,23 +1,33 @@
-# Project 2 - Ames Housing Data and Kaggle Challenge
+# Ames Housing Data and Kaggle Challenge
 
-Bobble Bee investment fund has the goal to study the real state market of Ames. Predictions of the price of realty were made using the realty characteristics present in Ames Housing dataset and, after that, those predictions were compared to the actual value for studying potential investment gains.
-In this project, the predictions were made with linear regression exploring different strategies.
+The Ames housing market is the subject of study for a real estate investment firm seeking to identify undervalued properties with potential for investment and subsequent gains.
+This project's objective is to analyze the market dynamics of Ames to pinpoint opportunities for strategic investment. By identifying properties that are undervalued relative to their market potential, the firm aims to capitalize on opportunities for profitable real estate investments.
 
-**Cleaning data:**
+This identification was performed creating a linear model with the highest R2 score and comparing to current sale price in the market.
 
-1. Variables that were only present in 20% or less of the dataset were not considered, since it is difficult to generalize them.
-1. Variables that 90% or more of the variables fit only in one category were not considered, there is huge variability in 95% of the dataset and we cannot differentiate that when its all in one category
-2. Variables considered to be ordinal that were string type were transformed to numerical.
-3. Null Values in variables considered as dummies were filled with 0.
-4. Null values in numerical variables were filled with the mean.
+**Data set used in this project**: [Dataset](https://jse.amstat.org/v19n3/decock/DataDocumentation.txt)
 
+## Cleaning data:
+- Unique identifiers were removed from the model, since they are not to be used in the model.
+- Features that had more than 95% of observations having one unique value were selected to test further for model improvement. Variables with such high concentration do not have much variability that translates to variability of the target variable.
+- Features with outliers and their respective limit value were selected to test further for model improvement.
+- Target's distribution was right long-tailed and was log transformed to fit a more normal distribution while modelling.
+- Multicollinearity was explored by analyzing correlation between variables, variables that presented a correlation higher than 50% had the variance inflaction factor (VIF) calculated to check for multicollinearity. Three variables (year_built, year_remod/add and garage_yr_blt) presented high VIF and keeping the variable with highest correlation to the target (year_built) was tested for model improvement.
 
-**Data set used in this project **
-3. [Dataset](https://jse.amstat.org/v19n3/decock/DataDocumentation.txt)
+## Suggested Modifications
+Classes with the suggested modifications were created to test R2 score.<br>
+(1) Original Data<br>
+(2) Filtered columns: columns with >95% of observations having one unique value and multicollinear columns<br>
+(3) 2 + removing ourliers<br>
+(4) 2 + replacing zeros in features with many zeros<br>
 
-**Modeling strategies**
-- Transforming the target variable to its logarithm the R2 score was 90.3%%
-- After removing outliers of ground living area, the 92.3%
-- Using Ridge regression with an alpha of 10 led to R2 score of 91.2% in the test set.
+## Modeling strategies
+- Applied Linear Regression to the different classes created: the class with filtered columns and outliers removed had the best r2 score using cross validation with 5 fold.
+- Tested different imputation methods for both categorical and numerical variables. For categorical, filling with 'missing' and filling with the most frequent value were tested, where the latter perform slightly better. For numerical, mean, mode, iterative imputer with default parameters and KNN imputer with weights being uniform and distance were tested. Filling with the mean led to the best r2 score.
+- Tested Ridge and Lasso Regression using randomized search for alpha parameter with cross validation with 5 fold
 
-That is, 91.2% of the variability of sale price can be explained by the model.
+## Best Model
+Ridge Regression with alpha = 20 had a R2 score of 95%. That is, 95% of the variability of sale price can be explained by the model.
+
+## Investment Gains 
+Based on the model, there are realty that would lead to the gains of investment ranging between 350,000 and 500,000 dollars. These realty had the actual saleprice much cheaper than predicted, so I would recommend to take a closer look at them.
