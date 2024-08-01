@@ -1,33 +1,43 @@
-# Ames Housing Data and Kaggle Challenge
 
-The Ames housing market is the subject of study for a real estate investment firm seeking to identify undervalued properties with potential for investment and subsequent gains.
-This project's objective is to analyze the market dynamics of Ames to pinpoint opportunities for strategic investment. By identifying properties that are undervalued relative to their market potential, the firm aims to capitalize on opportunities for profitable real estate investments.
-
-This identification was performed creating a linear model with the highest R2 score and comparing to current sale price in the market.
-
+# Ames Housing Market Analysis Project
+# Project Overview
+The Ames Housing Market Analysis Project is designed to assist a real estate investment firm in identifying undervalued properties in Ames with potential for significant investment returns. By analyzing market dynamics and identifying properties undervalued relative to their market potential, the project aims to facilitate strategic investments in the real estate market.
+<br>
 **Data set used in this project**: [Dataset](https://jse.amstat.org/v19n3/decock/DataDocumentation.txt)
+<Br>
 
-## Cleaning data:
-- Unique identifiers were removed from the model, since they are not to be used in the model.
-- Features that had more than 95% of observations having one unique value were selected to test further for model improvement. Variables with such high concentration do not have much variability that translates to variability of the target variable.
-- Features with outliers and their respective limit value were selected to test further for model improvement.
-- Target's distribution was right long-tailed and was log transformed to fit a more normal distribution while modelling.
-- Multicollinearity was explored by analyzing correlation between variables, variables that presented a correlation higher than 50% had the variance inflaction factor (VIF) calculated to check for multicollinearity. Three variables (year_built, year_remod/add and garage_yr_blt) presented high VIF and keeping the variable with highest correlation to the target (year_built) was tested for model improvement.
+# Project Objectives
+- Market Analysis: Analyze the Ames housing market to identify undervalued properties.
+- Feature Engineering: Refine the dataset by removing or transforming features that do not contribute to predicting the target variable.
+- Model Development: Develop and refine predictive models to estimate property sale prices.
+- Investment Strategy: Identify properties with the greatest potential for profitable investment based on model predictions.
+# Data Preprocessing
+Feature Selection and Transformation
+- Low Variability Features: Features with 95% or more observations showing the same value were removed due to their lack of predictive power.
+- Categorical Features: ms_subclass and mo_sold were treated as categorical variables since their numerical values do not imply a quantitative hierarchy.
+- Outliers: Outliers were identified and potentially removed to improve model accuracy.
+- Zero-Value Features: Features with a high frequency of zero values were examined for their impact on the target variable.
+- Target Distribution: A log transformation was applied to the target variable (sale price) to better fit a normal distribution.
+(2) Collinearity
+- Multicollinearity Check: Collinear features were identified using a heatmap and Variance Inflation Factor (VIF). High collinearity among year_remod/add, garage_yr_blt, and year_built led to retaining only the feature with the highest correlation to the target variable.
 
-## Suggested Modifications
-Classes with the suggested modifications were created to test R2 score.<br>
-(1) Original Data<br>
-(2) Filtered columns: columns with >95% of observations having one unique value and multicollinear columns<br>
-(3) 2 + removing ourliers<br>
-(4) 2 + replacing zeros in features with many zeros<br>
+# Dataset Transformation
+Several variations of the dataset were prepared for model training: <Br>
+(1) Standardized Columns: Basic standardization.<Br>
+(2) Filtered Columns: Standardization with removal of low-variability features.<Br>
+(3) Outlier Removal: Further refinement by removing outliers.<Br>
+(4) Zero-Value Adjustment: Adjusting zero values in the dataset.<Br>
+The third variation (standardization, filtering, and outlier removal) demonstrated the best performance and was selected for final model development.
 
-## Modeling strategies
-- Applied Linear Regression to the different classes created: the class with filtered columns and outliers removed had the best r2 score using cross validation with 5 fold.
-- Tested different imputation methods for both categorical and numerical variables. For categorical, filling with 'missing' and filling with the most frequent value were tested, where the latter perform slightly better. For numerical, mean, mode, iterative imputer with default parameters and KNN imputer with weights being uniform and distance were tested. Filling with the mean led to the best r2 score.
-- Tested Ridge and Lasso Regression using randomized search for alpha parameter with cross validation with 5 fold
+# Model Development
+## Model Selection
+- Linear Regression Models: Linear Regression, Ridge, and Lasso regularizations were tested.
+- Best Performing Model: Ridge Regression with an alpha of 20 provided the best results, achieving an R² score of 95% in cross-validation.
+- Imputation Techniques: <Br>
+Categorical Data: Missing values were filled with the mode, which provided better performance than filling with 'missing'. <br>
+Numerical Data: Imputation with the mean was selected as the best technique.
+## Results and Insights
+The Ridge Regression model predicted property sale prices with high accuracy (R² score of 95%). The model identified properties that, according to its predictions, could yield significant returns on investment, with predicted gains ranging from $350,000 to $500,000. However, the discrepancy between predicted and actual sale prices suggests further investigation is needed to ensure the reliability of these investment opportunities.
 
-## Best Model
-Ridge Regression with alpha = 20 had a R2 score of 95%. That is, 95% of the variability of sale price can be explained by the model.
-
-## Investment Gains 
-Based on the model, there are realty that would lead to the gains of investment ranging between 350,000 and 500,000 dollars. These realty had the actual saleprice much cheaper than predicted, so I would recommend to take a closer look at them.
+# Conclusion
+This project provided valuable insights into the Ames housing market, highlighting potential investment opportunities. The high accuracy of the predictive model supports its utility in strategic decision-making for real estate investments. Future work may include refining the model further, investigating the causes of discrepancies in predictions, and exploring additional factors that influence property values.
